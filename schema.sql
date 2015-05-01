@@ -1,3 +1,8 @@
+-- while running psql in the terminal, run '\i path/to/schema.sql' to generate db and tables locally
+
+-- CREATE DATABASE polartiger;
+-- \connect polartiger
+
 -- ---
 -- Globals
 -- ---
@@ -10,14 +15,14 @@
 -- 
 -- ---
 
-DROP TABLE IF EXISTS `users`;
     
-CREATE TABLE `users` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `name` VARCHAR NOT NULL DEFAULT 'NULL',
-  `hashed_password` VARCHAR NOT NULL DEFAULT 'NULL',
-  `email` VARCHAR NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE "users" (
+  "id" SERIAL NOT NULL,
+  "name" TEXT NOT NULL,
+  "hashed_password" VARCHAR NOT NULL,
+  "email" TEXT NULL DEFAULT NULL,
+  "timestamp" TIMESTAMP NOT NULL DEFAULT current_timestamp ,
+  PRIMARY KEY ("id")
 );
 
 -- ---
@@ -25,16 +30,15 @@ CREATE TABLE `users` (
 -- 
 -- ---
 
-DROP TABLE IF EXISTS `events`;
     
-CREATE TABLE `events` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `event_info` MEDIUMTEXT NULL DEFAULT NULL,
-  `event_title` VARCHAR NOT NULL DEFAULT 'NULL',
-  `event_category` VARCHAR NULL DEFAULT NULL,
-  `event_date` DATE NULL DEFAULT NULL,
-  `event_image` MEDIUMTEXT NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE "events" (
+  "id" SERIAL NOT NULL,
+  "event_info" TEXT NULL DEFAULT NULL,
+  "event_title" TEXT NOT NULL,
+  "event_category" TEXT NULL DEFAULT NULL,
+  "event_date" DATE NULL DEFAULT NULL,
+  "event_image" TEXT NULL DEFAULT NULL,
+  PRIMARY KEY ("id")
 );
 
 -- ---
@@ -42,18 +46,21 @@ CREATE TABLE `events` (
 -- 
 -- ---
 
-DROP TABLE IF EXISTS `users_events`;
     
-CREATE TABLE `users_events` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `users_id` INTEGER NULL DEFAULT NULL,
-  `event_id` INTEGER NULL DEFAULT NULL,
-  PRIMARY KEY (`id`, `users_id`, `event_id`)
+CREATE TABLE "users_events" (
+  "id" SERIAL NOT NULL,
+  "user_id" INTEGER NULL DEFAULT NULL,
+  "event_id" INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY ("id")
 );
 
 -- ---
 -- Foreign Keys 
 -- ---
 
-ALTER TABLE `users` ADD FOREIGN KEY (id) REFERENCES `users_events` (`users_id`);
-ALTER TABLE `events` ADD FOREIGN KEY (id) REFERENCES `users_events` (`event_id`);
+ALTER TABLE "users_events" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+ALTER TABLE "users_events" ADD FOREIGN KEY ("event_id") REFERENCES "events" ("id");
+
+INSERT INTO users (name, hashed_password, email) values ('test', '1234', 'some@one.com');
+INSERT INTO events (event_info, event_title, event_category) values ('test event info', 'event1', 'concernt');
+INSERT INTO users_events (user_id, event_id) values (1, 1);
