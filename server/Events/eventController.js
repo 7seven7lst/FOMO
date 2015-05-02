@@ -1,6 +1,5 @@
 var pg = require('pg');
-
-var dbUrl = process.env.DATABASE_URL || 'postgres://username:@localhost/polartiger';
+var dbUrl=require('../dbConfig/dbConfig');
 
 
 module.exports = {
@@ -27,6 +26,7 @@ module.exports = {
         //output: 1 
         client.end();
       });
+      res.end();
     });
   },
 
@@ -50,6 +50,7 @@ module.exports = {
         //output: 1 
         client.end();
       });
+      res.end();
     });
   }
 };
