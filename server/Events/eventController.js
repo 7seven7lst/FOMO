@@ -147,6 +147,10 @@ module.exports = {
       email = emails[0].email;
       sendEmail(email);
     });
+  },
+
+  editEvent: function() {
+    
   }
 };
 
