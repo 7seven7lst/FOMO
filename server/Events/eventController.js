@@ -144,7 +144,6 @@ module.exports = {
     db.editEvent(req.body, req.params.id, function(){
       res.end();
     });
-  
   },
 
   subscribe: function(req, res) {
