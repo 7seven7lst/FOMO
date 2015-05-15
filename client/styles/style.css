@@ -114,3 +114,8 @@ nav#hmenu ul a:hover{
 .center-heading {
   text-align: center;
 }
+
+.test {
+  background-image: url('../images/coachella.jpg');
+
+}
